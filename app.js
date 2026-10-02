@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Help panel on every page
   const help = document.createElement('a');
   help.className = 'help-panel';
-  help.href = 'tel:1234567890';
-  help.innerHTML = '<span aria-hidden="true">☎</span> לעזרה - צלצלו <strong dir="ltr">1234567890</strong>';
+  help.href = 'tel:12345';
+  help.innerHTML = '<span aria-hidden="true">☎</span> לעזרה - צלצלו <strong dir="ltr">12345</strong>';
   document.body.appendChild(help);
 });
