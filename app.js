@@ -1,7 +1,5 @@
 // EasyPublish — shared helpers
-
-// Web-app URL of the Google Apps Script (google-apps-script/Code.gs). Empty = submissions off.
-const SCRIPT_URL = '';
+const REPO = 'eithanhaletsky-hub/musk-article';
 const CATEGORIES = ['טכנולוגיה', 'עסקים', 'חלל', 'פרופילים', 'כללי'];
 
 function esc(s) {
@@ -48,21 +46,11 @@ function articleHref(a) {
   return a.url ? a.url : `article.html?id=${encodeURIComponent(a.id)}`;
 }
 
-// Site articles (articles.json) + approved community articles (Google Sheet)
 async function loadArticles() {
-  const local = fetch('articles.json?v=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : []).catch(() => []);
-  const remote = SCRIPT_URL ? fetch(SCRIPT_URL).then(r => r.ok ? r.json() : []).catch(() => []) : Promise.resolve([]);
-  const [a, b] = await Promise.all([local, remote]);
-  const list = [...a, ...(Array.isArray(b) ? b : [])];
-  if (!list.length) throw new Error('load failed');
-  return list.sort((x, y) => String(y.date).localeCompare(String(x.date)));
-}
-
-async function submitArticle(data) {
-  const res = await fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) });
-  const out = await res.json();
-  if (!out.ok) throw new Error(out.error || 'failed');
-  return out;
+  const res = await fetch('articles.json?v=' + Date.now(), { cache: 'no-store' });
+  if (!res.ok) throw new Error('load failed');
+  const list = await res.json();
+  return list.sort((a, b) => String(b.date).localeCompare(String(a.date)));
 }
 
 function todayHe() {
@@ -72,4 +60,11 @@ function todayHe() {
 document.addEventListener('DOMContentLoaded', () => {
   const t = document.getElementById('today');
   if (t) t.textContent = todayHe();
+
+  // Help panel on every page
+  const help = document.createElement('a');
+  help.className = 'help-panel';
+  help.href = 'tel:1234567890';
+  help.innerHTML = '<span aria-hidden="true">☎</span> לעזרה - צלצלו <strong dir="ltr">1234567890</strong>';
+  document.body.appendChild(help);
 });

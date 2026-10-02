@@ -51,8 +51,6 @@
       <label for="sources">מקורות <span class="hint">(לא חובה · קישור אחד בכל שורה)</span></label>
       <textarea id="sources" class="short" dir="ltr" placeholder="https://..."></textarea>
 
-      <input id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
-
       <div class="actions">
         <button type="submit" class="btn">שליחה לפרסום ←</button>
         <button type="button" class="btn secondary" id="previewBtn">תצוגה מקדימה</button>
@@ -70,10 +68,10 @@
     <div class="box">
       <h3>מה קורה אחרי השליחה</h3>
       <ol class="steps">
-        <li>הכתבה נשלחת ישירות למערכת. לא צריך הרשמה או חשבון.</li>
-        <li>המערכת קוראת ומאשרת.</li>
-        <li>אחרי האישור הכתבה מופיעה באתר עם השם שלכם.</li>
-        <li>כתבות טובות במיוחד נבחרות ל<strong>כתבות המובילות</strong>.</li>
+        <li>ייפתח עמוד ב-GitHub עם הכתבה שלכם כבר ממולאת.</li>
+        <li>אם אין לכם חשבון GitHub, תתבקשו לפתוח חשבון חינמי (פעם אחת בלבד).</li>
+        <li>לוחצים <strong>Create</strong> בתחתית העמוד.</li>
+        <li>המערכת קוראת ומאשרת, והכתבה עולה לאתר אוטומטית.</li>
       </ol>
     </div>
     <div class="box">
@@ -103,7 +101,6 @@ const $ = id => document.getElementById(id);
 $('category').innerHTML = CATEGORIES.map(c => `<option${c === 'כללי' ? ' selected' : ''}>${esc(c)}</option>`).join('');
 
 const FIELDS = ['headline', 'dek', 'author', 'category', 'content', 'sources'];
-if (!SCRIPT_URL) showMsg('השליחה עדיין לא הופעלה באתר. אפשר לכתוב, והטיוטה נשמרת בדפדפן עד שהשליחה תופעל.');
 const DRAFT_KEY = 'easypublish-draft';
 
 // Keep an unsent draft in this browser
@@ -135,22 +132,25 @@ $('form').addEventListener('submit', async e => {
   e.preventDefault();
   const v = values();
   if (!v.headline || !v.author || !v.content) { showMsg('נא למלא כותרת, שם וטקסט.'); return; }
-  if (v.content.length < 20) { showMsg('הכתבה קצרה מדי.'); return; }
-  if (!SCRIPT_URL) { showMsg('השליחה עדיין לא הופעלה באתר. הטיוטה שמורה בדפדפן.'); return; }
 
-  const btn = e.submitter || $('form').querySelector('[type=submit]');
-  btn.disabled = true; btn.textContent = 'שולח…';
-  try {
-    await submitArticle({ ...v, website: $('website').value });
-    try { localStorage.removeItem(DRAFT_KEY); } catch {}
-    $('form').reset();
-    $('preview').hidden = true;
-    showMsg('✓ <strong>הכתבה נשלחה!</strong> תודה. היא תופיע באתר אחרי שהמערכת תאשר אותה.');
-  } catch {
-    showMsg('השליחה נכשלה. בדקו את החיבור לאינטרנט ונסו שוב. הטיוטה שמורה.');
-  } finally {
-    btn.disabled = false; btn.textContent = 'שליחה לפרסום ←';
+  const base = `https://github.com/${REPO}/issues/new`;
+  const params = new URLSearchParams({ template: 'article.yml', title: `כתבה: ${v.headline}` });
+  FIELDS.forEach(f => { if (v[f]) params.set(f, v[f]); });
+  let url = `${base}?${params}`;
+
+  // Very long articles don't fit in a link — copy the text and let the writer paste it
+  if (url.length > 7500) {
+    params.delete('content');
+    url = `${base}?${params}`;
+    let copied = false;
+    try { await navigator.clipboard.writeText(v.content); copied = true; } catch {}
+    showMsg(copied
+      ? 'הכתבה ארוכה, אז העתקנו את הטקסט ללוח. בעמוד שנפתח, הדביקו אותו (Ctrl+V) בשדה <strong>הכתבה עצמה</strong>.'
+      : 'הכתבה ארוכה מדי לשליחה אוטומטית. העתיקו את הטקסט והדביקו אותו בשדה <strong>הכתבה עצמה</strong> בעמוד שנפתח.');
+  } else {
+    showMsg('נפתח עמוד GitHub בלשונית חדשה. לחצו שם <strong>Create</strong> כדי לשלוח. הטיוטה נשמרת כאן עד שתמחקו אותה.');
   }
+  window.open(url, '_blank', 'noopener');
 });
 </script>
 </body>

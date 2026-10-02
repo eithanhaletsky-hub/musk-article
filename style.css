@@ -89,6 +89,11 @@ code{background:var(--line);padding:1px 6px;border-radius:2px;font-size:.9em}
 ol.steps{padding-right:20px;font-size:15px}
 ol.steps li{margin-bottom:8px}
 
+.help-panel{position:fixed;left:16px;bottom:16px;z-index:50;display:flex;align-items:center;gap:8px;background:var(--card);color:var(--ink);border:1px solid var(--line);border-right:4px solid var(--accent);box-shadow:0 4px 16px rgba(0,0,0,.12);padding:10px 16px;font-size:15px;text-decoration:none;border-radius:2px}
+.help-panel:hover{border-color:var(--accent)}
+.help-panel strong{color:var(--accent)}
+@media (max-width:600px){.help-panel{left:12px;right:12px;bottom:12px;justify-content:center}footer{padding-bottom:64px}}
+
 footer{background:var(--navy);color:#c7d1df;font-size:14px}
 footer .wrap{padding:26px 16px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 footer a{color:#e4ecf7}

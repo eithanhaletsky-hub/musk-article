@@ -1,0 +1,54 @@
+name: פרסום כתבה
+
+# Runs when the site owner adds the "לפרסום" label to a submitted article issue.
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: publish-articles
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.event.label.name == 'לפרסום'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Add article to articles.json
+        id: add
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const run = require('./.github/scripts/publish.js');
+            await run({ github, context, core });
+
+      - name: Commit and push
+        if: steps.add.outputs.changed == 'true'
+        env:
+          TITLE: ${{ steps.add.outputs.title }}
+          NUM: ${{ github.event.issue.number }}
+        run: |
+          git config user.name "EasyPublish Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add articles.json
+          git commit -m "פרסום כתבה: $TITLE (#$NUM)"
+          git push
+
+      - name: Notify writer and close
+        if: steps.add.outputs.changed == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const id = '${{ steps.add.outputs.id }}';
+            const url = `https://${context.repo.owner}.github.io/${context.repo.repo}/article.html?id=${encodeURIComponent(id)}`;
+            await github.rest.issues.createComment({
+              ...context.repo, issue_number: context.issue.number,
+              body: `🎉 הכתבה פורסמה! היא תופיע באתר תוך דקה-שתיים:\n${url}`
+            });
+            await github.rest.issues.update({ ...context.repo, issue_number: context.issue.number, state: 'closed', state_reason: 'completed' });
