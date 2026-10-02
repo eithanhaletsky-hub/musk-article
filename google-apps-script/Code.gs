@@ -1,3 +1,5 @@
+/** @OnlyCurrentDoc  Limits the script to this one spreadsheet — no access to the rest of the Google account. */
+
 // EasyPublish — free "backend" on Google Sheets (no keys, no server).
 // Paste into Extensions → Apps Script of a new Google Sheet, then Deploy → Web app (access: Anyone).
 //
