@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EasyPublish | כתיבת כתבה</title>
+<meta name="description" content="כתבו כתבה ושלחו אותה לפרסום ב-EasyPublish.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="topbar"><div class="wrap"><span id="today"></span><span>EasyPublish · מגזין דיגיטלי עצמאי</span></div></div>
+
+<header class="masthead"><div class="wrap">
+  <p class="brand"><a href="./">Easy<span>Publish</span></a></p>
+  <p class="tagline">הדרך הקלה לפרסם כתבה משלך</p>
+  <nav class="sections" aria-label="מדורים" id="nav"></nav>
+</div></header>
+
+<main><div class="wrap page-grid">
+  <section>
+    <p class="kicker">כתיבה</p>
+    <h1>כתבו כתבה חדשה</h1>
+    <p class="dek">מלאו את הפרטים, בדקו בתצוגה המקדימה, ושלחו. אחרי אישור המערכת הכתבה תופיע באתר.</p>
+
+    <form class="form" id="form" autocomplete="on">
+      <label for="headline">כותרת *</label>
+      <input id="headline" required maxlength="120" placeholder="למשל: איך בינה מלאכותית משנה את בית הספר">
+
+      <label for="dek">כותרת משנה <span class="hint">(משפט או שניים שמסכמים את הכתבה)</span></label>
+      <input id="dek" maxlength="280">
+
+      <div class="row2">
+        <div>
+          <label for="author">שם הכותב/ת *</label>
+          <input id="author" required maxlength="60" autocomplete="name">
+        </div>
+        <div>
+          <label for="category">מדור</label>
+          <select id="category"></select>
+        </div>
+      </div>
+
+      <label for="content">הכתבה עצמה *
+        <span class="hint">· שורה ריקה = פסקה חדשה · <code>## </code> בתחילת שורה = כותרת ביניים · <code>&gt; </code> = ציטוט מודגש · <code>**מילה**</code> = הדגשה · <code>[טקסט](https://...)</code> = קישור</span>
+      </label>
+      <textarea id="content" required placeholder="כתבו כאן…"></textarea>
+
+      <label for="sources">מקורות <span class="hint">(לא חובה · קישור אחד בכל שורה)</span></label>
+      <textarea id="sources" class="short" dir="ltr" placeholder="https://..."></textarea>
+
+      <div class="actions">
+        <button type="submit" class="btn">שליחה לפרסום ←</button>
+        <button type="button" class="btn secondary" id="previewBtn">תצוגה מקדימה</button>
+      </div>
+      <div class="msg" id="msg" role="status"></div>
+    </form>
+
+    <div class="preview" id="preview" hidden>
+      <p class="preview-label">תצוגה מקדימה</p>
+      <article id="previewBody"></article>
+    </div>
+  </section>
+
+  <aside>
+    <div class="box">
+      <h3>מה קורה אחרי השליחה</h3>
+      <ol class="steps">
+        <li>ייפתח עמוד ב-GitHub עם הכתבה שלכם כבר ממולאת.</li>
+        <li>אם אין לכם חשבון GitHub, תתבקשו לפתוח חשבון חינמי (פעם אחת בלבד).</li>
+        <li>לוחצים <strong>Create</strong> בתחתית העמוד.</li>
+        <li>המערכת קוראת ומאשרת, והכתבה עולה לאתר אוטומטית.</li>
+      </ol>
+    </div>
+    <div class="box">
+      <h3>כללי הפרסום</h3>
+      <ul>
+        <li>תוכן מקורי שכתבתם בעצמכם</li>
+        <li>בלי פגיעה, הסתה או מידע אישי על אחרים</li>
+        <li>עובדות? צרפו מקור</li>
+        <li>המערכת רשאית לא לפרסם כתבה</li>
+      </ul>
+    </div>
+  </aside>
+</div></main>
+
+<footer><div class="wrap">
+  <p class="note">EasyPublish הוא אתר פרסום עצמאי ואינו קשור לאף גוף, ארגון או כלי תקשורת אחר. הכתבות נכתבות על ידי הכותבים ששמם מופיע עליהן, והאחריות על התוכן היא שלהם.</p>
+  <p>© 2026 EasyPublish</p>
+</div></footer>
+
+<script src="app.js"></script>
+<script>
+document.getElementById('nav').innerHTML = `<a href="./">ראשי</a>` +
+  CATEGORIES.map(c => `<a href="./?cat=${encodeURIComponent(c)}">${esc(c)}</a>`).join('') +
+  `<a href="write.html" class="write active">✍ כתבו כתבה</a>`;
+
+const $ = id => document.getElementById(id);
+$('category').innerHTML = CATEGORIES.map(c => `<option${c === 'כללי' ? ' selected' : ''}>${esc(c)}</option>`).join('');
+
+const FIELDS = ['headline', 'dek', 'author', 'category', 'content', 'sources'];
+const DRAFT_KEY = 'easypublish-draft';
+
+// Keep an unsent draft in this browser
+try {
+  const d = JSON.parse(localStorage.getItem(DRAFT_KEY) || '{}');
+  FIELDS.forEach(f => { if (d[f]) $(f).value = d[f]; });
+} catch {}
+$('form').addEventListener('input', () => {
+  try { localStorage.setItem(DRAFT_KEY, JSON.stringify(Object.fromEntries(FIELDS.map(f => [f, $(f).value])))); } catch {}
+});
+
+function values() { return Object.fromEntries(FIELDS.map(f => [f, $(f).value.trim()])); }
+
+function showMsg(html) { const m = $('msg'); m.innerHTML = html; m.classList.add('show'); }
+
+$('previewBtn').addEventListener('click', () => {
+  const v = values();
+  $('previewBody').innerHTML = `
+    <p class="kicker">${esc(v.category)}</p>
+    <h1>${esc(v.headline || 'כותרת הכתבה')}</h1>
+    ${v.dek ? `<p class="dek">${esc(v.dek)}</p>` : ''}
+    <div class="byline"><span>מאת <strong>${esc(v.author || 'שם הכותב/ת')}</strong></span><span>זמן קריאה: כ-${readingTime(v.content)} דקות</span></div>
+    <div class="body">${renderBody(v.content) || '<p>הטקסט יופיע כאן…</p>'}</div>`;
+  $('preview').hidden = false;
+  $('preview').scrollIntoView({ behavior: 'smooth' });
+});
+
+$('form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const v = values();
+  if (!v.headline || !v.author || !v.content) { showMsg('נא למלא כותרת, שם וטקסט.'); return; }
+
+  const base = `https://github.com/${REPO}/issues/new`;
+  const params = new URLSearchParams({ template: 'article.yml', title: `כתבה: ${v.headline}` });
+  FIELDS.forEach(f => { if (v[f]) params.set(f, v[f]); });
+  let url = `${base}?${params}`;
+
+  // Very long articles don't fit in a link — copy the text and let the writer paste it
+  if (url.length > 7500) {
+    params.delete('content');
+    url = `${base}?${params}`;
+    let copied = false;
+    try { await navigator.clipboard.writeText(v.content); copied = true; } catch {}
+    showMsg(copied
+      ? 'הכתבה ארוכה, אז העתקנו את הטקסט ללוח. בעמוד שנפתח, הדביקו אותו (Ctrl+V) בשדה <strong>הכתבה עצמה</strong>.'
+      : 'הכתבה ארוכה מדי לשליחה אוטומטית. העתיקו את הטקסט והדביקו אותו בשדה <strong>הכתבה עצמה</strong> בעמוד שנפתח.');
+  } else {
+    showMsg('נפתח עמוד GitHub בלשונית חדשה. לחצו שם <strong>Create</strong> כדי לשלוח. הטיוטה נשמרת כאן עד שתמחקו אותה.');
+  }
+  window.open(url, '_blank', 'noopener');
+});
+</script>
+</body>
+</html>

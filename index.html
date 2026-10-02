@@ -3,156 +3,96 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EasyPublish | אילון מאסק</title>
-<meta name="description" content="אילון מאסק: מפרטוריה ועד הטריליון הראשון. כתבה מקורית ב-EasyPublish.">
+<title>EasyPublish | מגזין קהילתי</title>
+<meta name="description" content="EasyPublish: מגזין דיגיטלי עצמאי שבו כל אחד יכול לפרסם כתבה משלו.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --ink:#1a1f2b; --muted:#5b6475; --line:#d9dde4; --paper:#fbfaf7; --navy:#0f2a4a; --accent:#a8873a; --link:#1d4f8f; --card:#ffffff;
-  }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --ink:#e8eaee; --muted:#a3abb9; --line:#2c3442; --paper:#11151c; --navy:#0b1d33; --accent:#c9a65a; --link:#8db8f0; --card:#171c25;
-    }
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Assistant",system-ui,sans-serif;line-height:1.85;font-size:18px}
-  a{color:var(--link);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
-  a:hover{text-decoration-thickness:2px}
-  .topbar{background:var(--navy);color:#dfe6f0;font-size:13px;letter-spacing:.02em}
-  .topbar .wrap{display:flex;justify-content:space-between;gap:12px;padding:6px 16px;flex-wrap:wrap}
-  header.masthead{border-bottom:3px double var(--line);background:var(--card)}
-  .masthead .wrap{text-align:center;padding:28px 16px 18px}
-  .brand{font-family:"Frank Ruhl Libre",serif;font-weight:900;font-size:clamp(34px,6vw,54px);letter-spacing:.01em;margin:0;color:var(--ink)}
-  .brand span{color:var(--accent)}
-  .tagline{margin:4px 0 0;color:var(--muted);font-size:15px}
-  nav.sections{border-top:1px solid var(--line);margin-top:18px;padding-top:10px;display:flex;justify-content:center;gap:22px;flex-wrap:wrap;font-weight:600;font-size:15px}
-  nav.sections a{color:var(--ink);text-decoration:none}
-  .wrap{max-width:1080px;margin:0 auto}
-  main .wrap{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:48px;padding:40px 16px 64px}
-  @media (max-width:860px){main .wrap{grid-template-columns:1fr;gap:32px}}
-  .kicker{color:var(--accent);font-weight:700;font-size:14px;letter-spacing:.08em;margin:0 0 8px}
-  h1{font-family:"Frank Ruhl Libre",serif;font-weight:900;font-size:clamp(32px,5vw,48px);line-height:1.2;margin:0 0 14px}
-  .dek{font-size:21px;color:var(--muted);margin:0 0 22px;line-height:1.6}
-  .byline{display:flex;gap:10px 18px;flex-wrap:wrap;font-size:14px;color:var(--muted);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 0;margin-bottom:30px}
-  .byline strong{color:var(--ink)}
-  article p{margin:0 0 1.3em;text-align:justify}
-  article p:first-of-type::first-letter{font-family:"Frank Ruhl Libre",serif;float:right;font-size:4.2em;line-height:.85;margin:6px 0 0 10px;color:var(--navy);font-weight:900}
-  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) article p:first-of-type::first-letter{color:var(--accent)}}
-  article h2{font-family:"Frank Ruhl Libre",serif;font-size:25px;margin:1.8em 0 .5em;padding-top:.4em;border-top:1px solid var(--line)}
-  .pull{font-family:"Frank Ruhl Libre",serif;font-size:24px;line-height:1.5;border-right:4px solid var(--accent);padding:4px 18px 4px 0;margin:28px 0;color:var(--navy)}
-  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pull{color:var(--ink)}}
-  aside .box{background:var(--card);border:1px solid var(--line);padding:18px 20px;margin-bottom:24px}
-  aside h3{font-family:"Frank Ruhl Libre",serif;font-size:19px;margin:0 0 10px;padding-bottom:8px;border-bottom:2px solid var(--accent)}
-  aside dl{margin:0;font-size:15px}
-  aside dt{color:var(--muted);font-size:13px;margin-top:10px}
-  aside dd{margin:0;font-weight:600}
-  aside ul{margin:0;padding:0 18px 0 0;font-size:15px;line-height:1.7}
-  aside li{margin-bottom:8px}
-  .sources{margin-top:40px;padding-top:20px;border-top:3px double var(--line)}
-  .sources h2{border:0;margin-top:0}
-  .sources ol{padding-right:20px;font-size:15px;color:var(--muted)}
-  .sources li{margin-bottom:6px}
-  footer{background:var(--navy);color:#c7d1df;font-size:14px}
-  footer .wrap{padding:26px 16px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-  footer a{color:#e4ecf7}
-  .note{max-width:620px}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="topbar"><div class="wrap"><span>יום שישי, 2 באוקטובר 2026</span><span>EasyPublish · מגזין דיגיטלי עצמאי</span></div></div>
+<div class="topbar"><div class="wrap"><span id="today"></span><span>EasyPublish · מגזין דיגיטלי עצמאי</span></div></div>
 
 <header class="masthead"><div class="wrap">
-  <p class="brand">Easy<span>Publish</span></p>
+  <p class="brand"><a href="./">Easy<span>Publish</span></a></p>
   <p class="tagline">הדרך הקלה לפרסם כתבה משלך</p>
-  <nav class="sections" aria-label="מדורים">
-    <a href="#">ראשי</a><a href="#">טכנולוגיה</a><a href="#">עסקים</a><a href="#">חלל</a><a href="#">פרופילים</a>
-  </nav>
+  <nav class="sections" aria-label="מדורים" id="nav"></nav>
 </div></header>
 
-<main><div class="wrap">
-<article>
-  <p class="kicker">פרופיל</p>
-  <h1>אילון מאסק: מפרטוריה ועד הטריליון הראשון</h1>
-  <p class="dek">יזם, מהנדס וחובב סיכונים, שהקים חברות ששינו את עולם התשלומים, הרכב והחלל. בדרך הוא הפך לאחת הדמויות השנויות ביותר במחלוקת בזמננו.</p>
-  <div class="byline"><span>מאת <strong>מערכת EasyPublish</strong></span><span>פורסם: 2 באוקטובר 2026</span><span>זמן קריאה: כ-8 דקות</span></div>
-
-  <p>מעטים האנשים שהשם שלהם מעורר תגובות חזקות כל כך כמו אילון מאסק. מבחינת חלק מהציבור הוא חדשן נדיר, שהצליח להחזיר את ארצות הברית לטיסות מאוישות לחלל ולהפוך את הרכב החשמלי ממוצר נישה למוצר המוני. בעיני אחרים הוא מנהל קשוח, אדם שמתבטא בפזיזות ברשתות החברתיות, ומי שצבר כוח כלכלי ופוליטי חסר תקדים. שתי התמונות נכונות במידה מסוימת, ודווקא המתח ביניהן הוא שהופך את סיפורו למרתק כל כך. הכתבה הזו מנסה לפרוש את הקווים המרכזיים בחייו: מילדות בדרום אפריקה, דרך שורת חברות הזנק, ועד לשנה שבה הפך, לפחות על הנייר, לאדם הראשון בהיסטוריה ששוויו עבר טריליון דולר.</p>
-
-  <h2>שנים ראשונות</h2>
-  <p>מאסק נולד ב-28 ביוני 1971 בפרטוריה שבדרום אפריקה, לאב מהנדס דרום אפריקאי ולאם קנדית שעבדה כדוגמנית וכדיאטנית. כבר כילד גילה עניין עמוק במחשבים ובמדע בדיוני, ועל פי הסיפורים המקובלים כתב משחק מחשב ומכר אותו עוד לפני שמלאו לו שלוש עשרה. בגיל שבע עשרה עזב את דרום אפריקה ועבר לקנדה. אחת הסיבות שציין הייתה רצונו להימנע מהשירות הצבאי, שהיה אז חובה ונקשר באכיפת משטר האפרטהייד. הוא למד שנתיים באוניברסיטת קווינס שבאונטריו, ואחר כך עבר לאוניברסיטת פנסילבניה, שם קיבל תואר ראשון בכלכלה ותואר ראשון נוסף בפיזיקה. משם המשיך לסטנפורד ללימודי דוקטורט, אבל עזב אותם אחרי ימים ספורים בלבד כדי להקים את החברה הראשונה שלו.</p>
-
-  <h2>Zip2, PayPal וההון הראשון</h2>
-  <p>יחד עם אחיו קימבל ייסד מאסק את Zip2, חברת תוכנה שעזרה לעיתונים מקומיים להעלות תוכן למרשתת ולבנות מדריכים עירוניים מקוונים. ב-1999 נמכרה החברה לקומפק תמורת סכום של כמעט 350 מיליון דולר, וחלקו של מאסק הגיע לעשרות מיליונים. את הכסף השקיע מיד במיזם הבא, X.com, שירות פיננסי מקוון שמטרתו הייתה לאפשר תשלומים באמצעות כתובת דואר אלקטרוני. ב-2000 התמזגה החברה עם Confinity, המיזם של מקס לבצ'ין ופיטר ת'יל, והחברה המאוחדת נודעה בהמשך בשם PayPal. מאסק אמנם הודח מתפקיד המנכ"ל על רקע מאבקי כוח בהנהלה, אבל שמר על חלק גדול במניות. כשרכשה eBay את PayPal ב-2002, בעסקה של כ-1.5 מיליארד דולר, הרוויח מאסק כ-170 מיליון דולר, והון זה היה הבסיס לכל מה שבא אחריו.</p>
-
-  <h2>SpaceX והחזרת האסטרונאוטים</h2>
-  <p>באותה שנה ייסד מאסק את SpaceX, מתוך אמונה שהאנושות חייבת להפוך לציוויליזציה רב-כוכבית ושעלות השיגור לחלל גבוהה מדי. השנים הראשונות היו קשות במיוחד: שלושת השיגורים הראשונים של Falcon 1 נכשלו, והחברה עמדה על סף קריסה. ב-2008 הצליח הרביעי, והפך לטיל הדלק הנוזלי הראשון בפיתוח פרטי שהגיע למסלול סביב כדור הארץ. זמן קצר אחר כך זכתה החברה בחוזה גדול מנאס"א לאספקת מטענים לתחנת החלל הבינלאומית. ב-2015 הצליחה SpaceX להנחית בחזרה מאיץ של Falcon 9, הישג שאיש לא השיג קודם עם טיל בסדר גודל מסלולי. רגע השיא הגיע ב-30 במאי 2020, כאשר <a href="https://www.nasa.gov/news-release/nasa-astronauts-launch-from-america-in-historic-test-flight-of-spacex-crew-dragon/" target="_blank" rel="noopener">שני אסטרונאוטים של נאס"א שוגרו בחללית Crew Dragon</a>, בשיגור המאויש הראשון מאדמת ארצות הברית מאז הוצאתן לגמלאות של מעבורות החלל ב-2011.</p>
-
-  <p class="pull">"בעיני חלק מהציבור הוא חדשן נדיר; בעיני אחרים, אדם שצבר כוח חסר תקדים. שתי התמונות נכונות במידה מסוימת."</p>
-
-  <h2>Starlink ו-Starship</h2>
-  <p>לצד הטילים בנתה SpaceX את Starlink, רשת של אלפי לוויינים במסלול נמוך שמספקת גישה לאינטרנט מהיר גם לאזורים כפריים ומבודדים. השירות קיבל משמעות גיאופוליטית כשמאסק העמיד אותו לרשות אוקראינה זמן קצר אחרי הפלישה הרוסית ב-2022. עם זאת, ההחלטות שלו בנוגע לשימוש הצבאי בשירות עוררו גם ביקורת חריפה. במקביל פיתחה החברה את Starship, הטיל הגדול והחזק ביותר שנבנה אי פעם, והמיועד בעתיד לנשיאת בני אדם אל הירח ואל מאדים. טיסת הניסוי הראשונה, באפריל 2023, הסתיימה בהתפרקות הטיל בתוך דקות ספורות. הטיסות הבאות רשמו התקדמות עקבית, כולל נחיתות מבוקרות בים ותפיסה של המאיץ העצום בידי זרועות מגדל השיגור, הישג שנראה עד אז כמעט דמיוני.</p>
-
-  <h2>טסלה והמהפכה החשמלית</h2>
-  <p>טסלה לא נוסדה על ידי מאסק, אבל הוא הוביל את סבב ההשקעה הראשון בה ב-2004, כיהן כיושב ראש, ומ-2008 גם כמנכ"ל. תחת הנהגתו השיקה החברה את ה-Roadster, ואחריו את Model S, Model X, Model 3 ו-Model Y, והפכה ליצרנית הרכבים החשמליים המובילה בארצות הברית. ב-2016 רכשה טסלה את SolarCity, חברת האנרגיה הסולארית שבראשה עמדו בני דודיו, כחלק מהחזון של חברת אנרגיה מתחדשת משולבת. הדרך לא הייתה חלקה: קשיי ייצור, ציוץ מ-2018 על כוונה להפוך את החברה לפרטית שהוביל להסדר עם רשות ניירות הערך האמריקנית ולוויתור על תפקיד היו"ר, וגם תאונות שבהן היו מעורבות מערכות הנהיגה האוטונומית של החברה, שגררו חקירות ותביעות. בשנים האחרונות נשחק נתח השוק של טסלה מול התחרות הגוברת, בעיקר מצד יצרניות סיניות.</p>
-
-  <h2>מטוויטר ל-X</h2>
-  <p>באוקטובר 2022, אחרי חודשים של היסוסים ומאבק משפטי, <a href="https://www.voanews.com/a/elon-musk-completes-44-billion-acquisition-of-twitter/6809089.html" target="_blank" rel="noopener">השלים מאסק את רכישת טוויטר תמורת כ-44 מיליארד דולר</a>. מיד עם השלמת העסקה פיטר את ההנהלה הבכירה, ובחודשים שאחר כך קיצץ חלק גדול מכוח האדם בחברה. הוא שינה את שיטת האימות של המשתמשים, החזיר לפלטפורמה חשבונות שהורחקו בעבר, וביולי 2023 שינה את שם החברה ל-X והחליף את הציפור הכחולה המוכרת. השינויים לוו בעזיבה של מפרסמים גדולים, במיוחד אחרי שמאסק הגיב באהדה לפוסט שהביע עמדות אנטישמיות, תגובה שעוררה סערה ציבורית. בשנים שאחר כך הפכה X לחלק מקבוצת החברות של מאסק בתחום הבינה המלאכותית, וצ'טבוט ה-Grok שלה ספג ביקורת בינלאומית חריפה בגלל יצירת תמונות פוגעניות.</p>
-
-  <h2>פוליטיקה, דוג'י והשבר עם טראמפ</h2>
-  <p>בבחירות 2024 היה מאסק אחד התומכים הבולטים והתורמים הגדולים ביותר במערכת הבחירות של דונלד טראמפ. אחרי הניצחון הוא הוצב בראש "המחלקה ליעילות ממשלתית", הידועה בכינוי DOGE, שהובילה קיצוצים חדים בתקציבי הממשל ובכוח האדם הפדרלי, ובכלל זה פירוק בפועל של הסוכנות האמריקנית לפיתוח בינלאומי. אלא שהברית לא החזיקה מעמד. מאסק עזב את תפקידו במאי 2025, וזמן קצר לאחר מכן תקף בחריפות את חוק התקציב הגדול של הנשיא, בטענה שהוא יגדיל את החוב הלאומי בצורה מסוכנת. טראמפ הגיב באיום לבטל חוזים ממשלתיים של חברות מאסק, והעימות הפומבי הפיל את מניית טסלה. ביולי 2025 <a href="https://www.aljazeera.com/news/2025/7/6/elon-musk-launches-the-america-party-as-feud-with-trump-escalates" target="_blank" rel="noopener">הכריז מאסק על הקמת מפלגה חדשה בשם "מפלגת אמריקה"</a>, שהוצגה כאתגר לשיטה הדו-מפלגתית.</p>
-
-  <h2>2026: הנפקה, טריליון ופסק דין</h2>
-  <p>שנת 2026 הייתה דרמטית במיוחד. ב-12 ביוני <a href="https://www.cnbc.com/2026/06/12/elon-musk-trillionaire-spacex.html" target="_blank" rel="noopener">נסחרה SpaceX לראשונה בבורסת נאסד"ק</a>, ושווי החזקותיו של מאסק בה ובטסלה חצה את רף הטריליון דולר. זה הפך אותו לאדם הראשון בהיסטוריה שהגיע לשווי כזה, אף שרובו נשען על מניות ולא על כסף נזיל. על פי <a href="https://en.wikipedia.org/wiki/Initial_public_offering_of_SpaceX" target="_blank" rel="noopener">הסיכום בוויקיפדיה</a>, עד סוף יולי ירדה מניית SpaceX בכמחצית משיאה, ומאסק איבד זמנית את מעמד הטריליונר. במקביל נמשכו הצרות המשפטיות: במרץ קבע חבר מושבעים פדרלי בסן פרנסיסקו שמאסק הטעה משקיעים בציוצים שפרסם בתקופת המשא ומתן על רכישת טוויטר. ביולי <a href="https://www.claimsjournal.com/news/national/2026/07/07/338626.htm" target="_blank" rel="noopener">דחה השופט צ'ארלס ברייר את רוב בקשותיו לבטל את פסק הדין</a>, ועורכי הדין של המשקיעים מעריכים את הפיצוי בכ-2.6 מיליארד דולר.</p>
-
-  <h2>האיש מאחורי הכותרות</h2>
-  <p>מעבר לעסקים, חייו האישיים של מאסק מסובכים לא פחות. הוא נישא והתגרש שלוש פעמים משתי נשים, ולו לפחות ארבעה עשר ילדים ידועים מכמה בנות זוג, נתון שמשמש לו גם בסיס לטיעונים הציבוריים שלו על ירידת הילודה בעולם. מאסק מתאר את עצמו כמכור לעבודה, שעובד לפעמים יותר ממאה שעות בשבוע. ב-2012 הצטרף ל"התחייבות הנתינה", ובשנים האחרונות העביר מניות בשווי מיליארדי דולרים לקרן שלו ולמטרות צדקה, אף שמבקרים שואלים לאן בדיוק הגיע הכסף. בסופו של דבר, קשה לסכם את מורשתו במשפט אחד. הוא דחף קדימה תעשיות שלמות, אבל גם הפך לסמל של ריכוז עוצמה בידי אדם אחד. כפי שעולה מ<a href="https://www.britannica.com/money/Elon-Musk" target="_blank" rel="noopener">הערך עליו באנציקלופדיה בריטניקה</a>, הסיפור שלו עדיין רחוק מסיום.</p>
-
-  <section class="sources">
-    <h2>מקורות וקריאה נוספת</h2>
-    <ol>
-      <li><a href="https://www.nasa.gov/news-release/nasa-astronauts-launch-from-america-in-historic-test-flight-of-spacex-crew-dragon/" target="_blank" rel="noopener">NASA: שיגור Demo-2 ההיסטורי (2020)</a></li>
-      <li><a href="https://www.voanews.com/a/elon-musk-completes-44-billion-acquisition-of-twitter/6809089.html" target="_blank" rel="noopener">VOA / Reuters: מאסק משלים את רכישת טוויטר (2022)</a></li>
-      <li><a href="https://www.aljazeera.com/news/2025/7/6/elon-musk-launches-the-america-party-as-feud-with-trump-escalates" target="_blank" rel="noopener">Al Jazeera: הקמת "מפלגת אמריקה" (2025)</a></li>
-      <li><a href="https://www.cnbc.com/2026/06/12/elon-musk-trillionaire-spacex.html" target="_blank" rel="noopener">CNBC: מאסק הופך לטריליונר הראשון (2026)</a></li>
-      <li><a href="https://www.aljazeera.com/economy/2026/6/12/spacex-ipo-debuts-in-us-markets-musk-becomes-worlds-first-trillionaire" target="_blank" rel="noopener">Al Jazeera: הנפקת SpaceX (2026)</a></li>
-      <li><a href="https://en.wikipedia.org/wiki/Initial_public_offering_of_SpaceX" target="_blank" rel="noopener">Wikipedia: ההנפקה של SpaceX</a></li>
-      <li><a href="https://www.claimsjournal.com/news/national/2026/07/07/338626.htm" target="_blank" rel="noopener">Claims Journal: השופט דוחה את בקשת מאסק לבטל את פסק הדין (2026)</a></li>
-      <li><a href="https://www.britannica.com/money/Elon-Musk" target="_blank" rel="noopener">Encyclopaedia Britannica: Elon Musk</a></li>
-    </ol>
+<main><div class="wrap page-grid">
+  <section>
+    <div id="lead"></div>
+    <h2 class="section-title"><span id="listTitle">כל הכתבות</span><small id="count"></small></h2>
+    <div class="cards" id="cards"></div>
   </section>
-</article>
 
-<aside>
-  <div class="box">
-    <h3>בקצרה</h3>
-    <dl>
-      <dt>שם מלא</dt><dd>אילון ריב מאסק</dd>
-      <dt>נולד</dt><dd>28 ביוני 1971, פרטוריה</dd>
-      <dt>השכלה</dt><dd>אוניברסיטת פנסילבניה (כלכלה ופיזיקה)</dd>
-      <dt>חברות מרכזיות</dt><dd>Zip2, PayPal, SpaceX, טסלה, X, Neuralink, The Boring Company</dd>
-    </dl>
-  </div>
-  <div class="box">
-    <h3>ציוני דרך</h3>
-    <ul>
-      <li><strong>1999</strong> · מכירת Zip2</li>
-      <li><strong>2002</strong> · eBay רוכשת את PayPal; הקמת SpaceX</li>
-      <li><strong>2008</strong> · מנכ"ל טסלה; Falcon 1 מגיע למסלול</li>
-      <li><strong>2020</strong> · שיגור אסטרונאוטים ראשון</li>
-      <li><strong>2022</strong> · רכישת טוויטר</li>
-      <li><strong>2025</strong> · DOGE והשבר עם טראמפ</li>
-      <li><strong>2026</strong> · הנפקת SpaceX</li>
-    </ul>
-  </div>
-</aside>
+  <aside>
+    <div class="box">
+      <h3>יש לכם מה לספר?</h3>
+      <p>EasyPublish פתוח לכולם. כתבו כתבה, שלחו אותה, ואחרי אישור המערכת היא תעלה לאתר עם השם שלכם.</p>
+      <a class="btn accent" href="write.html">✍ כתבו כתבה</a>
+    </div>
+    <div class="box">
+      <h3>איך זה עובד</h3>
+      <ul>
+        <li>כותבים את הכתבה בעמוד הכתיבה</li>
+        <li>שולחים אותה דרך GitHub (צריך חשבון חינמי)</li>
+        <li>המערכת עוברת ומאשרת</li>
+        <li>הכתבה מתפרסמת אוטומטית תוך כדקה</li>
+      </ul>
+    </div>
+  </aside>
 </div></main>
 
 <footer><div class="wrap">
-  <p class="note">EasyPublish הוא אתר פרסום עצמאי ואינו קשור לאף גוף, ארגון או כלי תקשורת אחר. הכתבה נכתבה על ידי המערכת על בסיס מקורות פומביים, והקישורים מובילים לאתרים חיצוניים.</p>
+  <p class="note">EasyPublish הוא אתר פרסום עצמאי ואינו קשור לאף גוף, ארגון או כלי תקשורת אחר. הכתבות נכתבות על ידי הכותבים ששמם מופיע עליהן, והאחריות על התוכן היא שלהם.</p>
   <p>© 2026 EasyPublish</p>
 </div></footer>
+
+<script src="app.js"></script>
+<script>
+(async () => {
+  const cat = new URLSearchParams(location.search).get('cat');
+  const nav = document.getElementById('nav');
+  nav.innerHTML = `<a href="./" class="${cat ? '' : 'active'}">ראשי</a>` +
+    CATEGORIES.map(c => `<a href="./?cat=${encodeURIComponent(c)}" class="${c === cat ? 'active' : ''}">${esc(c)}</a>`).join('') +
+    `<a href="write.html" class="write">✍ כתבו כתבה</a>`;
+
+  const cards = document.getElementById('cards');
+  let list;
+  try { list = await loadArticles(); }
+  catch { cards.innerHTML = '<p class="empty">לא הצלחנו לטעון את הכתבות. נסו לרענן את העמוד.</p>'; return; }
+
+  if (cat) {
+    list = list.filter(a => a.category === cat);
+    document.getElementById('listTitle').textContent = cat;
+  }
+  document.getElementById('count').textContent = list.length === 1 ? 'כתבה אחת' : list.length ? `${list.length} כתבות` : '';
+
+  if (!list.length) {
+    cards.innerHTML = `<p class="empty">עוד אין כתבות במדור הזה. <a href="write.html">רוצים להיות הראשונים?</a></p>`;
+    return;
+  }
+
+  const meta = a => `<span class="meta">מאת <strong>${esc(a.author)}</strong> · ${esc(formatDate(a.date))} · ${esc(a.minutes || 1)} דק׳ קריאה</span>`;
+
+  const [first, ...rest] = list;
+  document.getElementById('lead').innerHTML = `
+    <a class="lead-story" href="${esc(articleHref(first))}">
+      <p class="kicker">${esc(first.category)}</p>
+      <h2>${esc(first.title)}</h2>
+      <p class="dek">${esc(first.dek)}</p>
+      ${meta(first)}
+    </a>`;
+
+  cards.innerHTML = rest.length ? rest.map(a => `
+    <a class="card" href="${esc(articleHref(a))}">
+      <p class="kicker">${esc(a.category)}</p>
+      <h3>${esc(a.title)}</h3>
+      <p>${esc(a.dek)}</p>
+      ${meta(a)}
+    </a>`).join('') : `<p class="empty">זו הכתבה היחידה כרגע. <a href="write.html">כתבו את הבאה</a>.</p>`;
+})();
+</script>
 </body>
 </html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EasyPublish | כתבה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="topbar"><div class="wrap"><span id="today"></span><span>EasyPublish · מגזין דיגיטלי עצמאי</span></div></div>
+
+<header class="masthead"><div class="wrap">
+  <p class="brand"><a href="./">Easy<span>Publish</span></a></p>
+  <p class="tagline">הדרך הקלה לפרסם כתבה משלך</p>
+  <nav class="sections" aria-label="מדורים" id="nav"></nav>
+</div></header>
+
+<main><div class="wrap page-grid">
+  <article id="article"><p class="empty">טוען…</p></article>
+  <aside>
+    <div class="box">
+      <h3>על הכותב/ת</h3>
+      <p id="aboutAuthor"></p>
+    </div>
+    <div class="box">
+      <h3>גם אתם רוצים לכתוב?</h3>
+      <p>כל אחד יכול לפרסם ב-EasyPublish.</p>
+      <a class="btn accent" href="write.html">✍ כתבו כתבה</a>
+    </div>
+  </aside>
+</div></main>
+
+<footer><div class="wrap">
+  <p class="note">EasyPublish הוא אתר פרסום עצמאי ואינו קשור לאף גוף, ארגון או כלי תקשורת אחר. הכתבות נכתבות על ידי הכותבים ששמם מופיע עליהן, והאחריות על התוכן היא שלהם.</p>
+  <p>© 2026 EasyPublish</p>
+</div></footer>
+
+<script src="app.js"></script>
+<script>
+(async () => {
+  document.getElementById('nav').innerHTML = `<a href="./">ראשי</a>` +
+    CATEGORIES.map(c => `<a href="./?cat=${encodeURIComponent(c)}">${esc(c)}</a>`).join('') +
+    `<a href="write.html" class="write">✍ כתבו כתבה</a>`;
+
+  const el = document.getElementById('article');
+  const id = new URLSearchParams(location.search).get('id');
+  let a;
+  try { a = (await loadArticles()).find(x => x.id === id); } catch {}
+  if (!a) { el.innerHTML = '<h1>הכתבה לא נמצאה</h1><p><a href="./">חזרה לעמוד הראשי</a></p>'; return; }
+  if (a.url) { location.replace(a.url); return; }
+
+  document.title = `EasyPublish | ${a.title}`;
+  const sources = (a.sources || []).map(safeUrl).filter(Boolean);
+  el.innerHTML = `
+    <p class="kicker">${esc(a.category)}</p>
+    <h1>${esc(a.title)}</h1>
+    ${a.dek ? `<p class="dek">${esc(a.dek)}</p>` : ''}
+    <div class="byline"><span>מאת <strong>${esc(a.author)}</strong></span><span>פורסם: ${esc(formatDate(a.date))}</span><span>זמן קריאה: כ-${esc(a.minutes || readingTime(a.body))} דקות</span></div>
+    <div class="body">${renderBody(a.body)}</div>
+    ${sources.length ? `<section class="sources"><h2>מקורות וקריאה נוספת</h2><ol>${sources.map(s => `<li><a href="${esc(s)}" target="_blank" rel="noopener nofollow">${esc(s)}</a></li>`).join('')}</ol></section>` : ''}`;
+  document.getElementById('aboutAuthor').innerHTML = `<strong>${esc(a.author)}</strong> פרסם/ה את הכתבה הזו ב-EasyPublish ב-${esc(formatDate(a.date))}.`;
+})();
+</script>
+</body>
+</html>
