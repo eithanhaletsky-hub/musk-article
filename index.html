@@ -21,8 +21,12 @@
 
 <main><div class="wrap page-grid">
   <section>
-    <div id="lead"></div>
-    <h2 class="section-title"><span id="listTitle">כל הכתבות</span><small id="count"></small></h2>
+    <div id="featuredWrap">
+      <h2 class="section-title"><span>★ כתבות מובילות</span></h2>
+      <div id="lead"></div>
+      <div class="cards" id="featuredCards"></div>
+    </div>
+    <h2 class="section-title" style="margin-top:36px"><span id="listTitle">כתבות אחרונות</span><small id="count"></small></h2>
     <div class="cards" id="cards"></div>
   </section>
 
@@ -36,9 +40,9 @@
       <h3>איך זה עובד</h3>
       <ul>
         <li>כותבים את הכתבה בעמוד הכתיבה</li>
-        <li>שולחים אותה דרך GitHub (צריך חשבון חינמי)</li>
+        <li>לוחצים "שליחה", בלי הרשמה ובלי חשבון</li>
         <li>המערכת עוברת ומאשרת</li>
-        <li>הכתבה מתפרסמת אוטומטית תוך כדקה</li>
+        <li>הכתבה מופיעה באתר</li>
       </ul>
     </div>
   </aside>
@@ -63,35 +67,42 @@
   try { list = await loadArticles(); }
   catch { cards.innerHTML = '<p class="empty">לא הצלחנו לטעון את הכתבות. נסו לרענן את העמוד.</p>'; return; }
 
-  if (cat) {
-    list = list.filter(a => a.category === cat);
-    document.getElementById('listTitle').textContent = cat;
-  }
-  document.getElementById('count').textContent = list.length === 1 ? 'כתבה אחת' : list.length ? `${list.length} כתבות` : '';
-
-  if (!list.length) {
-    cards.innerHTML = `<p class="empty">עוד אין כתבות במדור הזה. <a href="write.html">רוצים להיות הראשונים?</a></p>`;
-    return;
-  }
-
   const meta = a => `<span class="meta">מאת <strong>${esc(a.author)}</strong> · ${esc(formatDate(a.date))} · ${esc(a.minutes || 1)} דק׳ קריאה</span>`;
-
-  const [first, ...rest] = list;
-  document.getElementById('lead').innerHTML = `
-    <a class="lead-story" href="${esc(articleHref(first))}">
-      <p class="kicker">${esc(first.category)}</p>
-      <h2>${esc(first.title)}</h2>
-      <p class="dek">${esc(first.dek)}</p>
-      ${meta(first)}
-    </a>`;
-
-  cards.innerHTML = rest.length ? rest.map(a => `
+  const card = a => `
     <a class="card" href="${esc(articleHref(a))}">
-      <p class="kicker">${esc(a.category)}</p>
+      <p class="kicker">${a.featured ? '★ ' : ''}${esc(a.category)}</p>
       <h3>${esc(a.title)}</h3>
       <p>${esc(a.dek)}</p>
       ${meta(a)}
-    </a>`).join('') : `<p class="empty">זו הכתבה היחידה כרגע. <a href="write.html">כתבו את הבאה</a>.</p>`;
+    </a>`;
+
+  let rest = list;
+  if (cat) {
+    // Section page: everything in the category, no featured block
+    document.getElementById('featuredWrap').hidden = true;
+    rest = list.filter(a => a.category === cat);
+    document.getElementById('listTitle').textContent = cat;
+  } else {
+    const featured = list.filter(a => a.featured);
+    if (featured.length) {
+      const [lead, ...more] = featured;
+      document.getElementById('lead').innerHTML = `
+        <a class="lead-story" href="${esc(articleHref(lead))}">
+          <p class="kicker">${esc(lead.category)}</p>
+          <h2>${esc(lead.title)}</h2>
+          <p class="dek">${esc(lead.dek)}</p>
+          ${meta(lead)}
+        </a>`;
+      document.getElementById('featuredCards').innerHTML = more.map(card).join('');
+      rest = list.filter(a => !a.featured);
+    } else {
+      document.getElementById('featuredWrap').hidden = true;
+    }
+  }
+
+  document.getElementById('count').textContent = rest.length === 1 ? 'כתבה אחת' : rest.length ? `${rest.length} כתבות` : '';
+  cards.innerHTML = rest.length ? rest.map(card).join('')
+    : `<p class="empty">${cat ? 'עוד אין כתבות במדור הזה.' : 'עוד אין כתבות מהקהילה.'} <a href="write.html">רוצים להיות הראשונים?</a></p>`;
 })();
 </script>
 </body>
